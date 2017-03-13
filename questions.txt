@@ -1,0 +1,28 @@
+1. What is the general trend in the curve?
+The curve appears to be trending upwards, meaning that the more data used for training,
+the more accurate test results were produced. However, there remains a lot of variation
+in the curve. After testing numerous higher 'num_trials' values (more tests per data set size),
+it seems performing more tests smooths out this curve into being nearly linear and clearly
+upward trending.
+
+2. Are there parts of the curve that appear to be noisier than others? Why?
+Both ends of the curve (5% of the data used for training and 95% of the data used for training)
+seem to be noisier than the middle portions of the curve. This is probably due to the facts
+that when very little training data is used, the model is over-fitted to one or two specific
+data sets, and that when a vast majority of the data is used for training, there is very little
+left over for testing, so if a relatively outlying and strange-looking data set is chosen for
+testing, it can skew the results.
+
+3. How many trials do you need to get a smooth curve?
+At 100 trials, the curve has smoothed a lot, but still has some major variations.
+After 500 trials, the curve is even smoother, but noise still remains. 1000 trials
+takes a significant amount of time more to run, but produces a nearly smooth curve.
+5000 trials takes a minute or two to run, but generates a line with almost no noise.
+
+4. Try different values for C (by changing LogisticRegression(C=10** -10)). What happens? If you want to know why this happens, see this Wikipedia page as well as the documentation for LogisticRegression in scikit-learn.
+Setting a higher value of C (I tried 1/10, 1, and 10) seems to generate a curve that looks
+similar to a square root graph in that the derivative is always positive with an always
+negative second derivative. Additionally, it seems that much of the noise has been canceled.
+A lower value of C (I tested 10**-100 and 10**-1000) seems to either do the exact opposite,
+or throw an error (Possibly an underflow error?). The graph looked the opposite of a square
+root graph, as it was always decreasing, but concave up. Additionally, the noise was amplified.
